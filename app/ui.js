@@ -80,7 +80,7 @@ var UI = {
             UI.toggleControlbarSide();
         }
 
-        UI.initFullscreen();
+        //UI.initFullscreen();
 
         // Setup event handlers
         UI.addControlbarHandlers();
@@ -88,8 +88,8 @@ var UI = {
         UI.addExtraKeysHandlers();
         UI.addMachineHandlers();
         UI.addConnectionControlHandlers();
-        UI.addClipboardHandlers();
-        UI.addSettingsHandlers();
+        //UI.addClipboardHandlers();
+        //UI.addSettingsHandlers();
         document.getElementById("noVNC_status")
             .addEventListener('click', UI.hideStatus);
 
@@ -812,7 +812,7 @@ var UI = {
     closeAllPanels: function() {
         UI.closeSettingsPanel();
         UI.closePowerPanel();
-        UI.closeClipboardPanel();
+        //UI.closeClipboardPanel();
         UI.closeExtraKeys();
     },
 
@@ -1029,7 +1029,7 @@ var UI = {
         UI.rfb.addEventListener("bell", UI.bell);
         UI.rfb.addEventListener("desktopname", UI.updateDesktopName);
         UI.rfb.clipViewport = UI.getSetting('view_clip');
-        UI.rfb.scaleViewport = UI.getSetting('resize') === 'scale';
+        UI.rfb.scaleViewport = true; 
         UI.rfb.resizeSession = UI.getSetting('resize') === 'remote';
 
         UI.updateViewOnly(); // requires UI.rfb
