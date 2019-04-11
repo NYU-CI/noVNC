@@ -15,7 +15,7 @@
     or the fragment:
         http://example.com/#host=HOST&port=PORT&encrypt=1
     -->
-    <title>noVNC</title>
+    <title>ADRF</title>
 
     <meta charset="utf-8" />
 
@@ -172,7 +172,7 @@
             <!-- Clipboard -->
             <input type="image" alt="Clipboard" src="app/images/clipboard.svg"
                 id="noVNC_clipboard_button" class="noVNC_button"
-                title="Clipboard" />
+                title="Clipboard" style="display: none;"/>
             <div class="noVNC_vcenter">
             <div id="noVNC_clipboard" class="noVNC_panel">
                 <div class="noVNC_heading">
@@ -188,12 +188,12 @@
             <!-- Toggle fullscreen -->
             <input type="image" alt="Fullscreen" src="app/images/fullscreen.svg"
                 id="noVNC_fullscreen_button" class="noVNC_button noVNC_hidden"
-                title="Fullscreen" />
+                title="Fullscreen" style="display: none;"/>
 
             <!-- Settings -->
             <input type="image" alt="Settings" src="app/images/settings.svg"
                 id="noVNC_settings_button" class="noVNC_button"
-                title="Settings" />
+                title="Settings" style="display: none;" />
             <div class="noVNC_vcenter">
             <div id="noVNC_settings" class="noVNC_panel">
                 <ul>
@@ -242,7 +242,7 @@
                                     </li>
                                     <li>
                                         <label for="noVNC_setting_path">Path:</label>
-                                        <input id="noVNC_setting_path" type="input" value="websockify" />
+                                        <input id="noVNC_setting_path" type="input" />
                                     </li>
                                 </ul></div>
                             </li>
@@ -332,5 +332,25 @@
         <source src="app/sounds/bell.oga" type="audio/ogg">
         <source src="app/sounds/bell.mp3" type="audio/mpeg">
     </audio>
+    <script type="module">
+      import UI from './app/ui.js';
+      var f = function () {
+        if (!UI.rfb) {
+          setTimeout(f, 1000);
+        } else {
+          UI.rfb.addEventListener('connect', function(event) {
+            window.parent.postMessage(JSON.stringify({from: 'novnc', state: 'connectedd'}), '*');
+            UI.rfb._display.defaultCursor();
+            // console.log(UI.connected)
+            // console.log(event);
+          });
+          UI.rfb.addEventListener('disconnect', function(event) {
+            window.parent.postMessage(JSON.stringify({from: 'novnc', state: 'disconneccted'}), '*');
+          });
+          // console.log(UI.rfb._rfb_connection_state);
+        }
+      };
+      f();
+    </script>
  </body>
 </html>
