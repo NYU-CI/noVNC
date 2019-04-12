@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html class="noVNC_loading">
 <head>
-
+    <script>
+        window.location.hash = 'path=' + window.location.pathname.slice(1) + 'websockify&autoconnect=true';
+    </script>
     <!--
     noVNC example: simple example using default UI
     Copyright (C) 2012 Joel Martin

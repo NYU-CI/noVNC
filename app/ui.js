@@ -164,12 +164,7 @@ var UI = {
         UI.initSetting('resize', 'off');
         UI.initSetting('shared', true);
         UI.initSetting('view_only', false);
-        if (window.location.pathname.split('/').length >= 3) {
-        	var pathPrefix = window.location.pathname.split('/')[1] + '/' + window.location.pathname.split('/')[2] + '/'
-		UI.initSetting('path', pathPrefix + 'websockify');
-        } else {
-        	UI.initSetting('path', 'websockify');
-	}
+        UI.initSetting('path', 'websockify');
         UI.initSetting('repeaterID', '');
         UI.initSetting('reconnect', false);
         UI.initSetting('reconnect_delay', 5000);
