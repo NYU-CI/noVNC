@@ -1114,6 +1114,7 @@ var UI = {
                 UI.showStatus(_("Something went wrong, connection is closed"),
                               'error');
             } else {
+                window.location = '/hub/home';
                 UI.showStatus(_("Failed to connect to server"), 'error');
             }
         } else if (UI.getSetting('reconnect', false) === true && !UI.inhibit_reconnect) {
