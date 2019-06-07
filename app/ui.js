@@ -311,6 +311,10 @@ var UI = {
             .addEventListener('click', UI.disconnect);
         document.getElementById("noVNC_connect_button")
             .addEventListener('click', UI.connect);
+        document.getElementById("noVNC_stop_workspace_button")
+            .addEventListener('click', UI.stopWorkspace);
+        document.getElementById("noVNC_stop_workspace_panel_button")
+            .addEventListener('click', UI.stopWorkspace);
         document.getElementById("noVNC_cancel_reconnect_button")
             .addEventListener('click', UI.cancelReconnect);
 
@@ -1029,7 +1033,7 @@ var UI = {
         UI.rfb.addEventListener("bell", UI.bell);
         UI.rfb.addEventListener("desktopname", UI.updateDesktopName);
         UI.rfb.clipViewport = UI.getSetting('view_clip');
-        UI.rfb.scaleViewport = true; 
+        UI.rfb.scaleViewport = true;
         UI.rfb.resizeSession = UI.getSetting('resize') === 'remote';
 
         UI.updateViewOnly(); // requires UI.rfb
@@ -1047,6 +1051,10 @@ var UI = {
         UI.updateVisualState('disconnecting');
 
         // Don't display the connection settings until we're actually disconnected
+    },
+    // Added for ADRF-specific flow
+    stopWorkspace: function() {
+      window.location.pathname = '/hub/home';
     },
 
     reconnect: function() {

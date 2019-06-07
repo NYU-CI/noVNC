@@ -296,7 +296,7 @@ select:active {
 #noVNC_control_bar_anchor.noVNC_right {
   left: auto;
   right: 0;
-  margin-top: 40px;
+  margin-top: 325px;
 }
 
 #noVNC_control_bar {
@@ -774,6 +774,43 @@ select:active {
 }
 
 #noVNC_connect_button img {
+  vertical-align: bottom;
+  height: 1.3em;
+}
+
+
+#noVNC_stop_workspace_button {
+  cursor: pointer;
+
+  /* padding: 10px; */
+
+  color: white;
+  background-color: #d9e0e7;
+  /* border-radius: 12px; */
+
+  text-align: center;
+  font-size: 20px;
+
+  /* box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5); */
+}
+#noVNC_stop_workspace_button div {
+  margin: 2px;
+  padding: 5px 30px;
+  border: 1px solid rgb(83, 99, 122);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background-color: #dc3545;
+
+}
+#noVNC_stop_workspace_button div:active {
+  border-bottom-width: 1px;
+  margin-top: 3px;
+}
+:root:not(.noVNC_touch) #noVNC_stop_workspace_button div:hover {
+  background-color: #dc3545;
+}
+
+#noVNC_stop_workspace_button img {
   vertical-align: bottom;
   height: 1.3em;
 }
