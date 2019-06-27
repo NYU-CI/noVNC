@@ -42,6 +42,10 @@ var UI = {
     reconnect_callback: null,
     reconnect_password: null,
 
+    jupyterHubHome: '/hub/home',
+    jupyterHubFrameId = 'jhub-frame',
+    jupyterHubFrameRefreshInterval: null,
+
     prime: function(callback) {
         if (document.readyState === "interactive" || document.readyState === "complete") {
             UI.load(callback);
@@ -1052,9 +1056,10 @@ var UI = {
 
         // Don't display the connection settings until we're actually disconnected
     },
+
     // Added for ADRF-specific flow
     stopWorkspace: function() {
-      window.location.pathname = '/hub/home';
+        window.location.pathname = UI.jupyterHubHome;
     },
 
     reconnect: function() {
@@ -1095,6 +1100,8 @@ var UI = {
 
         // Do this last because it can only be used on rendered elements
         UI.rfb.focus();
+
+        UI.createJupyterHubFrame();
     },
 
     disconnectFinished: function (e) {
@@ -1114,7 +1121,7 @@ var UI = {
                 UI.showStatus(_("Something went wrong, connection is closed"),
                               'error');
             } else {
-                window.location = '/hub/home';
+                window.location = UI.jupyterHubHome;
                 UI.showStatus(_("Failed to connect to server"), 'error');
             }
         } else if (UI.getSetting('reconnect', false) === true && !UI.inhibit_reconnect) {
@@ -1130,6 +1137,8 @@ var UI = {
 
         UI.openControlbar();
         UI.openConnectPanel();
+
+        UI.destroyJupyterHubFrame();
     },
 
     securityFailed: function (e) {
@@ -1651,6 +1660,26 @@ var UI = {
         optn.text = text;
         optn.value = value;
         selectbox.options.add(optn);
+    },
+
+    createJupyterHubFrame: function() {
+        var iframe = document.createElement('iframe');
+        iframe.id = UI.jupyterHubFrameId;
+        iframe.style.display = 'none'
+        iframe.src = UI.jupyterHubHome;
+        document.body.appendChild(iframe);
+
+        var reloadFrame = function() { document.getElementById(UI.jupyterHubFrameId).contentWindow.location.reload(); }
+        UI.jupyterHubFrameRefreshInterval = setInterval(reloadFrame, 60*1000);
+    },
+
+    destroyJupyterHubFrame: function() {
+        if (UI.jupyterHubFrameRefreshInterval) {
+            clearInterval(UI.jupyterHubFrameRefreshInterval);
+            UI.jupyterHubFrameRefreshInterval = null;
+        }
+        var iframe = document.getElementById(UI.jupyterHubFrameId);
+        iframe.parentNode.removeChild(iframe);
     },
 
 /* ------^-------
