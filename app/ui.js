@@ -1135,10 +1135,10 @@ var UI = {
             UI.showStatus(_("Disconnected"), 'normal');
         }
 
+        UI.destroyJupyterHubFrame();
+        
         UI.openControlbar();
         UI.openConnectPanel();
-
-        UI.destroyJupyterHubFrame();
     },
 
     securityFailed: function (e) {
@@ -1663,12 +1663,17 @@ var UI = {
     },
 
     createJupyterHubFrame: function() {
+        // clear old frame, if exists
+        UI.destroyJupyterHubFrame();
+        
+        // create frame
         var iframe = document.createElement('iframe');
         iframe.id = UI.jupyterHubFrameId;
         iframe.style.display = 'none'
         iframe.src = UI.jupyterHubHome;
         document.body.appendChild(iframe);
 
+        // set refresh interval to iframe
         var reloadFrame = function() { document.getElementById(UI.jupyterHubFrameId).contentWindow.location.reload(); }
         UI.jupyterHubFrameRefreshInterval = setInterval(reloadFrame, 60*1000);
     },
@@ -1679,7 +1684,9 @@ var UI = {
             UI.jupyterHubFrameRefreshInterval = null;
         }
         var iframe = document.getElementById(UI.jupyterHubFrameId);
-        iframe.parentNode.removeChild(iframe);
+        if (iframe) {
+            iframe.parentNode.removeChild(iframe);
+        }
     },
 
 /* ------^-------
