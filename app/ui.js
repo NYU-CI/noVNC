@@ -43,7 +43,7 @@ var UI = {
     reconnect_password: null,
 
     jupyterHubHome: '/hub/home',
-    jupyterHubFrameId = 'jhub-frame',
+    jupyterHubFrameId: 'jhub-frame',
     jupyterHubFrameRefreshInterval: null,
 
     prime: function(callback) {
