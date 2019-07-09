@@ -42,9 +42,10 @@ var UI = {
     reconnect_callback: null,
     reconnect_password: null,
 
-    jupyterHubHome: '/hub/home',
+    jupyterHubHomeUrl: '/hub/home',
     jupyterHubFrameId: 'jhub-frame',
-    jupyterHubFrameRefreshInterval: null,
+    jupyterHubFrameRefreshIntervalId: null,
+    jupyterHubSessionCheckTimeoutId: null,
 
     prime: function(callback) {
         if (document.readyState === "interactive" || document.readyState === "complete") {
@@ -1059,7 +1060,7 @@ var UI = {
 
     // Added for ADRF-specific flow
     stopWorkspace: function() {
-        window.location.pathname = UI.jupyterHubHome;
+        window.location.pathname = UI.jupyterHubHomeUrl;
     },
 
     reconnect: function() {
@@ -1102,6 +1103,7 @@ var UI = {
         UI.rfb.focus();
 
         UI.createJupyterHubFrame();
+        UI.runCheckJupyterHubSession();
     },
 
     disconnectFinished: function (e) {
@@ -1121,7 +1123,7 @@ var UI = {
                 UI.showStatus(_("Something went wrong, connection is closed"),
                               'error');
             } else {
-                window.location = UI.jupyterHubHome;
+                window.location = UI.jupyterHubHomeUrl;
                 UI.showStatus(_("Failed to connect to server"), 'error');
             }
         } else if (UI.getSetting('reconnect', false) === true && !UI.inhibit_reconnect) {
@@ -1136,7 +1138,10 @@ var UI = {
         }
 
         UI.destroyJupyterHubFrame();
-        
+        if (UI.jupyterHubSessionCheckTimeoutId) {
+            clearTimeout(UI.jupyterHubSessionCheckTimeoutId);
+        }
+
         UI.openControlbar();
         UI.openConnectPanel();
     },
@@ -1670,23 +1675,45 @@ var UI = {
         var iframe = document.createElement('iframe');
         iframe.id = UI.jupyterHubFrameId;
         iframe.style.display = 'none'
-        iframe.src = UI.jupyterHubHome;
+        iframe.src = UI.jupyterHubHomeUrl;
         document.body.appendChild(iframe);
 
         // set refresh interval to iframe
         var reloadFrame = function() { document.getElementById(UI.jupyterHubFrameId).contentWindow.location.reload(); }
-        UI.jupyterHubFrameRefreshInterval = setInterval(reloadFrame, 60*1000);
+        UI.jupyterHubFrameRefreshIntervalId = setInterval(reloadFrame, 60*1000);
     },
 
     destroyJupyterHubFrame: function() {
-        if (UI.jupyterHubFrameRefreshInterval) {
-            clearInterval(UI.jupyterHubFrameRefreshInterval);
-            UI.jupyterHubFrameRefreshInterval = null;
+        if (UI.jupyterHubFrameRefreshIntervalId) {
+            clearInterval(UI.jupyterHubFrameRefreshIntervalId);
+            UI.jupyterHubFrameRefreshIntervalId = null;
         }
         var iframe = document.getElementById(UI.jupyterHubFrameId);
         if (iframe) {
             iframe.parentNode.removeChild(iframe);
         }
+    },
+
+    checkJupyterHubSession: function() {
+        try {
+            return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
+                if (response.status != 200) {
+                    window.location.href = UI.jupyterHubHomeUrl;
+                    return true;
+                }
+            });
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    },
+
+    runCheckJupyterHubSession: function() {
+        function timeout() {
+            UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runCheckJupyterHubSession, 2000);
+        }
+        UI.checkJupyterHubSession()
+            .then(function(r) { r || timeout() })
+            .catch(function(e) { console.error(e) || timeout() });
     },
 
 /* ------^-------
@@ -1711,5 +1738,7 @@ if (l10n.language !== "en" && l10n.dictionary === undefined) {
 } else {
     UI.prime();
 }
+
+
 
 export default UI;
