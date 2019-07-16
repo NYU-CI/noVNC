@@ -1101,9 +1101,10 @@ var UI = {
 
         // Do this last because it can only be used on rendered elements
         UI.rfb.focus();
-
-        UI.createJupyterHubFrame();
-        UI.runCheckJupyterHubSession();
+	if(window.location.hostname !== 'localhost') {
+          UI.createJupyterHubFrame();
+          UI.runCheckJupyterHubSession();
+        }
     },
 
     disconnectFinished: function (e) {
