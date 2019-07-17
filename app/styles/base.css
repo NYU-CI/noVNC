@@ -306,10 +306,9 @@ select:active {
 #noVNC_control_bar {
   position: relative;
   /* left: -100%; */
-
   transition: 0.5s ease-in-out;
-
-  background-color: #2d353c;
+  /* background-color: #2d353c; */
+  background-image: linear-gradient(#658eba, #164480);
   border-radius: 0 10px 10px 0;
 
 }
@@ -349,8 +348,9 @@ select:active {
   z-index: -1;
   cursor: pointer;
   border-radius: 5px;
-  background-color: #2d353c;
-  background-image: url("../images/handle_bg.svg");
+  /* background-color: #2d353c; */
+  background-image: linear-gradient(#658eba, #164480);
+  /* background-image: url("../images/handle_bg.svg"); */
   background-repeat: no-repeat;
   background-position: right;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
@@ -602,6 +602,9 @@ select:active {
 
 .noVNC_name {
   min-width: 200px;
+  text-align: center;
+  color: white;
+  font-size: 0.8em;
 }
 
 /* Shutdown/Reboot */
