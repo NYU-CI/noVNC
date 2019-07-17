@@ -823,7 +823,7 @@ var UI = {
         UI.closeSettingsPanel();
         UI.closePowerPanel();
         //UI.closeClipboardPanel();
-        UI.closeExtraKeys();
+        //UI.closeExtraKeys();
     },
 
     /* ------^-------
