@@ -405,9 +405,6 @@ select:active {
   overflow-x: hidden;
   overflow-y: auto;
   padding: 0 10px 0 5px;
-}
-
-#noVNC_control_bar .noVNC_scroll .noVNC_scroll_top {
   display: flex;
 }
 
