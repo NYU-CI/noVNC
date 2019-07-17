@@ -600,6 +600,10 @@ select:active {
   padding: 0 10px;
 }
 
+.noVNC_name {
+  min-width: 200px;
+}
+
 /* Shutdown/Reboot */
 :root:not(.noVNC_connected) #noVNC_power_button {
   display: none;
