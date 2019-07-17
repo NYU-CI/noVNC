@@ -47,7 +47,7 @@ var UI = {
     jupyterHubFrameRefreshIntervalId: null,
     jupyterHubSessionCheckTimeoutId: null,
 
-    prime: function(callback) {
+    prime: function (callback) {
         if (document.readyState === "interactive" || document.readyState === "complete") {
             UI.load(callback);
         } else {
@@ -57,16 +57,16 @@ var UI = {
 
     // Setup rfb object, load settings from browser storage, then call
     // UI.init to setup the UI/menus
-    load: function(callback) {
+    load: function (callback) {
         WebUtil.initSettings(UI.start, callback);
     },
 
     // Render default UI and initialize settings menu
-    start: function(callback) {
+    start: function (callback) {
 
         // Setup global variables first
         UI.isSafari = (navigator.userAgent.indexOf('Safari') !== -1 &&
-                       navigator.userAgent.indexOf('Chrome') === -1);
+            navigator.userAgent.indexOf('Chrome') === -1);
 
         UI.initSettings();
 
@@ -77,7 +77,7 @@ var UI = {
         if (isTouchDevice) {
             document.documentElement.classList.add("noVNC_touch");
             // Remove the address bar
-            setTimeout(function() { window.scrollTo(0, 1); }, 100);
+            setTimeout(function () { window.scrollTo(0, 1); }, 100);
         }
 
         // Restore control bar position
@@ -90,7 +90,7 @@ var UI = {
         // Setup event handlers
         UI.addControlbarHandlers();
         UI.addTouchSpecificHandlers();
-        UI.addExtraKeysHandlers();
+        //UI.addExtraKeysHandlers();
         UI.addMachineHandlers();
         UI.addConnectionControlHandlers();
         //UI.addClipboardHandlers();
@@ -122,27 +122,27 @@ var UI = {
         }
     },
 
-    initFullscreen: function() {
+    initFullscreen: function () {
         // Only show the button if fullscreen is properly supported
         // * Safari doesn't support alphanumerical input while in fullscreen
         if (!UI.isSafari &&
             (document.documentElement.requestFullscreen ||
-             document.documentElement.mozRequestFullScreen ||
-             document.documentElement.webkitRequestFullscreen ||
-             document.body.msRequestFullscreen)) {
+                document.documentElement.mozRequestFullScreen ||
+                document.documentElement.webkitRequestFullscreen ||
+                document.body.msRequestFullscreen)) {
             document.getElementById('noVNC_fullscreen_button')
                 .classList.remove("noVNC_hidden");
             UI.addFullscreenHandlers();
         }
     },
 
-    initSettings: function() {
+    initSettings: function () {
         var i;
 
         // Logging selection dropdown
         var llevels = ['error', 'warn', 'info', 'debug'];
         for (i = 0; i < llevels.length; i += 1) {
-            UI.addOption(document.getElementById('noVNC_setting_logging'),llevels[i], llevels[i]);
+            UI.addOption(document.getElementById('noVNC_setting_logging'), llevels[i], llevels[i]);
         }
 
         // Settings with immediate effects
@@ -153,10 +153,10 @@ var UI = {
         // set manually
         var port = window.location.port;
         if (!port) {
-            if (window.location.protocol.substring(0,5) == 'https') {
+            if (window.location.protocol.substring(0, 5) == 'https') {
                 port = 443;
             }
-            else if (window.location.protocol.substring(0,4) == 'http') {
+            else if (window.location.protocol.substring(0, 4) == 'http') {
                 port = 80;
             }
         }
@@ -177,7 +177,7 @@ var UI = {
         UI.setupSettingLabels();
     },
     // Adds a link to the label elements on the corresponding input elements
-    setupSettingLabels: function() {
+    setupSettingLabels: function () {
         var labels = document.getElementsByTagName('LABEL');
         for (var i = 0; i < labels.length; i++) {
             var htmlFor = labels[i].htmlFor;
@@ -197,13 +197,13 @@ var UI = {
         }
     },
 
-/* ------^-------
-*     /INIT
-* ==============
-* EVENT HANDLERS
-* ------v------*/
+    /* ------^-------
+    *     /INIT
+    * ==============
+    * EVENT HANDLERS
+    * ------v------*/
 
-    addControlbarHandlers: function() {
+    addControlbarHandlers: function () {
         document.getElementById("noVNC_control_bar")
             .addEventListener('mousemove', UI.activateControlbar);
         document.getElementById("noVNC_control_bar")
@@ -231,12 +231,12 @@ var UI = {
         window.addEventListener('resize', UI.updateControlbarHandle);
 
         var exps = document.getElementsByClassName("noVNC_expander");
-        for (var i = 0;i < exps.length;i++) {
+        for (var i = 0; i < exps.length; i++) {
             exps[i].addEventListener('click', UI.toggleExpander);
         }
     },
 
-    addTouchSpecificHandlers: function() {
+    addTouchSpecificHandlers: function () {
         document.getElementById("noVNC_mouse_button0")
             .addEventListener('click', function () { UI.setMouseButton(1); });
         document.getElementById("noVNC_mouse_button1")
@@ -285,7 +285,7 @@ var UI = {
             .addEventListener('touchmove', UI.dragControlbarHandle);
     },
 
-    addExtraKeysHandlers: function() {
+    addExtraKeysHandlers: function () {
         document.getElementById("noVNC_toggle_extra_keys_button")
             .addEventListener('click', UI.toggleExtraKeys);
         document.getElementById("noVNC_toggle_ctrl_button")
@@ -300,18 +300,18 @@ var UI = {
             .addEventListener('click', UI.sendCtrlAltDel);
     },
 
-    addMachineHandlers: function() {
+    addMachineHandlers: function () {
         document.getElementById("noVNC_shutdown_button")
-            .addEventListener('click', function() { UI.rfb.machineShutdown(); });
+            .addEventListener('click', function () { UI.rfb.machineShutdown(); });
         document.getElementById("noVNC_reboot_button")
-            .addEventListener('click', function() { UI.rfb.machineReboot(); });
+            .addEventListener('click', function () { UI.rfb.machineReboot(); });
         document.getElementById("noVNC_reset_button")
-            .addEventListener('click', function() { UI.rfb.machineReset(); });
+            .addEventListener('click', function () { UI.rfb.machineReset(); });
         document.getElementById("noVNC_power_button")
             .addEventListener('click', UI.togglePowerPanel);
     },
 
-    addConnectionControlHandlers: function() {
+    addConnectionControlHandlers: function () {
         document.getElementById("noVNC_disconnect_button")
             .addEventListener('click', UI.disconnect);
         document.getElementById("noVNC_connect_button")
@@ -327,7 +327,7 @@ var UI = {
             .addEventListener('click', UI.setPassword);
     },
 
-    addClipboardHandlers: function() {
+    addClipboardHandlers: function () {
         document.getElementById("noVNC_clipboard_button")
             .addEventListener('click', UI.toggleClipboardPanel);
         document.getElementById("noVNC_clipboard_text")
@@ -338,7 +338,7 @@ var UI = {
 
     // Add a call to save settings when the element changes,
     // unless the optional parameter changeFunc is used instead.
-    addSettingChangeHandler: function(name, changeFunc) {
+    addSettingChangeHandler: function (name, changeFunc) {
         var settingElem = document.getElementById("noVNC_setting_" + name);
         if (changeFunc === undefined) {
             changeFunc = function () { UI.saveSetting(name); };
@@ -346,7 +346,7 @@ var UI = {
         settingElem.addEventListener('change', changeFunc);
     },
 
-    addSettingsHandlers: function() {
+    addSettingsHandlers: function () {
         document.getElementById("noVNC_settings_button")
             .addEventListener('click', UI.toggleSettingsPanel);
 
@@ -369,7 +369,7 @@ var UI = {
         UI.addSettingChangeHandler('reconnect_delay');
     },
 
-    addFullscreenHandlers: function() {
+    addFullscreenHandlers: function () {
         document.getElementById("noVNC_fullscreen_button")
             .addEventListener('click', UI.toggleFullscreen);
 
@@ -379,14 +379,14 @@ var UI = {
         window.addEventListener('msfullscreenchange', UI.updateFullscreenButton);
     },
 
-/* ------^-------
- * /EVENT HANDLERS
- * ==============
- *     VISUAL
- * ------v------*/
+    /* ------^-------
+     * /EVENT HANDLERS
+     * ==============
+     *     VISUAL
+     * ------v------*/
 
     // Disable/enable controls depending on connection state
-    updateVisualState: function(state) {
+    updateVisualState: function (state) {
 
         document.documentElement.classList.remove("noVNC_connecting");
         document.documentElement.classList.remove("noVNC_connected");
@@ -453,7 +453,7 @@ var UI = {
             .classList.remove('noVNC_open');
     },
 
-    showStatus: function(text, status_type, time) {
+    showStatus: function (text, status_type, time) {
         var statusElem = document.getElementById('noVNC_status');
 
         clearTimeout(UI.statusTimeout);
@@ -514,12 +514,12 @@ var UI = {
         }
     },
 
-    hideStatus: function() {
+    hideStatus: function () {
         clearTimeout(UI.statusTimeout);
         document.getElementById('noVNC_status').classList.remove("noVNC_open");
     },
 
-    activateControlbar: function(event) {
+    activateControlbar: function (event) {
         clearTimeout(UI.idleControlbarTimeout);
         // We manipulate the anchor instead of the actual control
         // bar in order to avoid creating new a stacking group
@@ -528,27 +528,27 @@ var UI = {
         UI.idleControlbarTimeout = window.setTimeout(UI.idleControlbar, 2000);
     },
 
-    idleControlbar: function() {
+    idleControlbar: function () {
         document.getElementById('noVNC_control_bar_anchor')
             .classList.add("noVNC_idle");
     },
 
-    keepControlbar: function() {
+    keepControlbar: function () {
         clearTimeout(UI.closeControlbarTimeout);
     },
 
-    openControlbar: function() {
+    openControlbar: function () {
         document.getElementById('noVNC_control_bar')
             .classList.add("noVNC_open");
     },
 
-    closeControlbar: function() {
+    closeControlbar: function () {
         UI.closeAllPanels();
         document.getElementById('noVNC_control_bar')
             .classList.remove("noVNC_open");
     },
 
-    toggleControlbar: function() {
+    toggleControlbar: function () {
         if (document.getElementById('noVNC_control_bar')
             .classList.contains("noVNC_open")) {
             UI.closeControlbar();
@@ -565,7 +565,8 @@ var UI = {
         if (barDisplayStyle !== 'none') {
             bar.style.transitionDuration = '0s';
             bar.addEventListener('transitionend', function () {
-                this.style.transitionDuration = ""; });
+                this.style.transitionDuration = "";
+            });
         }
 
         var anchor = document.getElementById('noVNC_control_bar_anchor');
@@ -648,7 +649,7 @@ var UI = {
             newY = controlbarBounds.top + margin;
 
         } else if (newY > controlbarBounds.top +
-                   controlbarBounds.height - handleHeight - margin) {
+            controlbarBounds.height - handleHeight - margin) {
             // Force coordinates to be above the bottom of the control bar
             newY = controlbarBounds.top +
                 controlbarBounds.height - handleHeight - margin;
@@ -673,7 +674,7 @@ var UI = {
         UI.moveControlbarHandle(handleBounds.top);
     },
 
-    controlbarHandleMouseUp: function(e) {
+    controlbarHandleMouseUp: function (e) {
         if ((e.type == "mouseup") && (e.button != 0)) return;
 
         // mouseup and mousedown on the same place toggles the controlbar
@@ -688,7 +689,7 @@ var UI = {
         UI.showControlbarHint(false);
     },
 
-    controlbarHandleMouseDown: function(e) {
+    controlbarHandleMouseDown: function (e) {
         if ((e.type == "mousedown") && (e.button != 0)) return;
 
         var ptr = getPointerEvent(e);
@@ -714,7 +715,7 @@ var UI = {
         UI.activateControlbar();
     },
 
-    toggleExpander: function(e) {
+    toggleExpander: function (e) {
         if (this.classList.contains("noVNC_open")) {
             this.classList.remove("noVNC_open");
         } else {
@@ -722,14 +723,14 @@ var UI = {
         }
     },
 
-/* ------^-------
- *    /VISUAL
- * ==============
- *    SETTINGS
- * ------v------*/
+    /* ------^-------
+     *    /VISUAL
+     * ==============
+     *    SETTINGS
+     * ------v------*/
 
     // Initial page load read/initialization of settings
-    initSetting: function(name, defVal) {
+    initSetting: function (name, defVal) {
         // Check Query string followed by cookie
         var val = WebUtil.getConfigVar(name);
         if (val === null) {
@@ -742,7 +743,7 @@ var UI = {
 
     // Update cookie and form control setting. If value is not set, then
     // updates from control to current cookie setting.
-    updateSetting: function(name) {
+    updateSetting: function (name) {
 
         // Update the settings control
         var value = UI.getSetting(name);
@@ -769,7 +770,7 @@ var UI = {
     },
 
     // Save control setting to cookie
-    saveSetting: function(name) {
+    saveSetting: function (name) {
         var val, ctrl = document.getElementById('noVNC_setting_' + name);
         if (ctrl.type === 'checkbox') {
             val = ctrl.checked;
@@ -784,11 +785,11 @@ var UI = {
     },
 
     // Read form control compatible setting from cookie
-    getSetting: function(name) {
+    getSetting: function (name) {
         var ctrl = document.getElementById('noVNC_setting_' + name);
         var val = WebUtil.readSetting(name);
         if (typeof val !== 'undefined' && val !== null && ctrl.type === 'checkbox') {
-            if (val.toString().toLowerCase() in {'0':1, 'no':1, 'false':1}) {
+            if (val.toString().toLowerCase() in { '0': 1, 'no': 1, 'false': 1 }) {
                 val = false;
             } else {
                 val = true;
@@ -800,38 +801,38 @@ var UI = {
     // These helpers compensate for the lack of parent-selectors and
     // previous-sibling-selectors in CSS which are needed when we want to
     // disable the labels that belong to disabled input elements.
-    disableSetting: function(name) {
+    disableSetting: function (name) {
         var ctrl = document.getElementById('noVNC_setting_' + name);
         ctrl.disabled = true;
         ctrl.label.classList.add('noVNC_disabled');
     },
 
-    enableSetting: function(name) {
+    enableSetting: function (name) {
         var ctrl = document.getElementById('noVNC_setting_' + name);
         ctrl.disabled = false;
         ctrl.label.classList.remove('noVNC_disabled');
     },
 
-/* ------^-------
- *   /SETTINGS
- * ==============
- *    PANELS
- * ------v------*/
+    /* ------^-------
+     *   /SETTINGS
+     * ==============
+     *    PANELS
+     * ------v------*/
 
-    closeAllPanels: function() {
+    closeAllPanels: function () {
         UI.closeSettingsPanel();
         UI.closePowerPanel();
         //UI.closeClipboardPanel();
         UI.closeExtraKeys();
     },
 
-/* ------^-------
- *   /PANELS
- * ==============
- * SETTINGS (panel)
- * ------v------*/
+    /* ------^-------
+     *   /PANELS
+     * ==============
+     * SETTINGS (panel)
+     * ------v------*/
 
-    openSettingsPanel: function() {
+    openSettingsPanel: function () {
         UI.closeAllPanels();
         UI.openControlbar();
 
@@ -853,14 +854,14 @@ var UI = {
             .classList.add("noVNC_selected");
     },
 
-    closeSettingsPanel: function() {
+    closeSettingsPanel: function () {
         document.getElementById('noVNC_settings')
             .classList.remove("noVNC_open");
         document.getElementById('noVNC_settings_button')
             .classList.remove("noVNC_selected");
     },
 
-    toggleSettingsPanel: function() {
+    toggleSettingsPanel: function () {
         if (document.getElementById('noVNC_settings')
             .classList.contains("noVNC_open")) {
             UI.closeSettingsPanel();
@@ -869,13 +870,13 @@ var UI = {
         }
     },
 
-/* ------^-------
- *   /SETTINGS
- * ==============
- *     POWER
- * ------v------*/
+    /* ------^-------
+     *   /SETTINGS
+     * ==============
+     *     POWER
+     * ------v------*/
 
-    openPowerPanel: function() {
+    openPowerPanel: function () {
         UI.closeAllPanels();
         UI.openControlbar();
 
@@ -885,14 +886,14 @@ var UI = {
             .classList.add("noVNC_selected");
     },
 
-    closePowerPanel: function() {
+    closePowerPanel: function () {
         document.getElementById('noVNC_power')
             .classList.remove("noVNC_open");
         document.getElementById('noVNC_power_button')
             .classList.remove("noVNC_selected");
     },
 
-    togglePowerPanel: function() {
+    togglePowerPanel: function () {
         if (document.getElementById('noVNC_power')
             .classList.contains("noVNC_open")) {
             UI.closePowerPanel();
@@ -902,7 +903,7 @@ var UI = {
     },
 
     // Disable/enable power button
-    updatePowerButton: function() {
+    updatePowerButton: function () {
         if (UI.connected &&
             UI.rfb.capabilities.power &&
             !UI.rfb.viewOnly) {
@@ -916,13 +917,13 @@ var UI = {
         }
     },
 
-/* ------^-------
- *    /POWER
- * ==============
- *   CLIPBOARD
- * ------v------*/
+    /* ------^-------
+     *    /POWER
+     * ==============
+     *   CLIPBOARD
+     * ------v------*/
 
-    openClipboardPanel: function() {
+    openClipboardPanel: function () {
         UI.closeAllPanels();
         UI.openControlbar();
 
@@ -932,14 +933,14 @@ var UI = {
             .classList.add("noVNC_selected");
     },
 
-    closeClipboardPanel: function() {
+    closeClipboardPanel: function () {
         document.getElementById('noVNC_clipboard')
             .classList.remove("noVNC_open");
         document.getElementById('noVNC_clipboard_button')
             .classList.remove("noVNC_selected");
     },
 
-    toggleClipboardPanel: function() {
+    toggleClipboardPanel: function () {
         if (document.getElementById('noVNC_clipboard')
             .classList.contains("noVNC_open")) {
             UI.closeClipboardPanel();
@@ -948,41 +949,41 @@ var UI = {
         }
     },
 
-    clipboardReceive: function(e) {
-        Log.Debug(">> UI.clipboardReceive: " + e.detail.text.substr(0,40) + "...");
+    clipboardReceive: function (e) {
+        Log.Debug(">> UI.clipboardReceive: " + e.detail.text.substr(0, 40) + "...");
         document.getElementById('noVNC_clipboard_text').value = e.detail.text;
         Log.Debug("<< UI.clipboardReceive");
     },
 
-    clipboardClear: function() {
+    clipboardClear: function () {
         document.getElementById('noVNC_clipboard_text').value = "";
         UI.rfb.clipboardPasteFrom("");
     },
 
-    clipboardSend: function() {
+    clipboardSend: function () {
         var text = document.getElementById('noVNC_clipboard_text').value;
-        Log.Debug(">> UI.clipboardSend: " + text.substr(0,40) + "...");
+        Log.Debug(">> UI.clipboardSend: " + text.substr(0, 40) + "...");
         UI.rfb.clipboardPasteFrom(text);
         Log.Debug("<< UI.clipboardSend");
     },
 
-/* ------^-------
- *  /CLIPBOARD
- * ==============
- *  CONNECTION
- * ------v------*/
+    /* ------^-------
+     *  /CLIPBOARD
+     * ==============
+     *  CONNECTION
+     * ------v------*/
 
-    openConnectPanel: function() {
+    openConnectPanel: function () {
         document.getElementById('noVNC_connect_dlg')
             .classList.add("noVNC_open");
     },
 
-    closeConnectPanel: function() {
+    closeConnectPanel: function () {
         document.getElementById('noVNC_connect_dlg')
             .classList.remove("noVNC_open");
     },
 
-    connect: function(event, password) {
+    connect: function (event, password) {
 
         // Ignore when rfb already exists
         if (typeof UI.rfb !== 'undefined') {
@@ -1020,15 +1021,17 @@ var UI = {
         url = UI.getSetting('encrypt') ? 'wss' : 'ws';
 
         url += '://' + host;
-        if(port) {
+        if (port) {
             url += ':' + port;
         }
         url += '/' + path;
 
         UI.rfb = new RFB(document.getElementById('noVNC_container'), url,
-                         { shared: UI.getSetting('shared'),
-                           repeaterID: UI.getSetting('repeaterID'),
-                           credentials: { password: password } });
+            {
+                shared: UI.getSetting('shared'),
+                repeaterID: UI.getSetting('repeaterID'),
+                credentials: { password: password }
+            });
         UI.rfb.addEventListener("connect", UI.connectFinished);
         UI.rfb.addEventListener("disconnect", UI.disconnectFinished);
         UI.rfb.addEventListener("credentialsrequired", UI.credentials);
@@ -1044,7 +1047,7 @@ var UI = {
         UI.updateViewOnly(); // requires UI.rfb
     },
 
-    disconnect: function() {
+    disconnect: function () {
         UI.closeAllPanels();
         UI.rfb.disconnect();
 
@@ -1059,11 +1062,11 @@ var UI = {
     },
 
     // Added for ADRF-specific flow
-    stopWorkspace: function() {
+    stopWorkspace: function () {
         window.location.pathname = UI.jupyterHubHomeUrl;
     },
 
-    reconnect: function() {
+    reconnect: function () {
         UI.reconnect_callback = null;
 
         // if reconnect has been disabled in the meantime, do nothing.
@@ -1074,7 +1077,7 @@ var UI = {
         UI.connect(null, UI.reconnect_password);
     },
 
-    cancelReconnect: function() {
+    cancelReconnect: function () {
         if (UI.reconnect_callback !== null) {
             clearTimeout(UI.reconnect_callback);
             UI.reconnect_callback = null;
@@ -1101,9 +1104,9 @@ var UI = {
 
         // Do this last because it can only be used on rendered elements
         UI.rfb.focus();
-	if(window.location.hostname !== 'localhost') {
-          UI.createJupyterHubFrame();
-          UI.runCheckJupyterHubSession();
+        if (window.location.hostname !== 'localhost') {
+            UI.createJupyterHubFrame();
+            UI.runCheckJupyterHubSession();
         }
     },
 
@@ -1122,7 +1125,7 @@ var UI = {
             UI.updateVisualState('disconnected');
             if (wasConnected) {
                 UI.showStatus(_("Something went wrong, connection is closed"),
-                              'error');
+                    'error');
             } else {
                 window.location = UI.jupyterHubHomeUrl;
                 UI.showStatus(_("Failed to connect to server"), 'error');
@@ -1161,26 +1164,26 @@ var UI = {
         UI.showStatus(msg, 'error');
     },
 
-/* ------^-------
- *  /CONNECTION
- * ==============
- *   PASSWORD
- * ------v------*/
+    /* ------^-------
+     *  /CONNECTION
+     * ==============
+     *   PASSWORD
+     * ------v------*/
 
-    credentials: function(e) {
+    credentials: function (e) {
         // FIXME: handle more types
         document.getElementById('noVNC_password_dlg')
             .classList.add('noVNC_open');
 
         setTimeout(function () {
-                document.getElementById('noVNC_password_input').focus();
-            }, 100);
+            document.getElementById('noVNC_password_input').focus();
+        }, 100);
 
         Log.Warn("Server asked for a password");
         UI.showStatus(_("Password is required"), "warning");
     },
 
-    setPassword: function(e) {
+    setPassword: function (e) {
         // Prevent actually submitting the form
         e.preventDefault();
 
@@ -1194,13 +1197,13 @@ var UI = {
             .classList.remove('noVNC_open');
     },
 
-/* ------^-------
- *  /PASSWORD
- * ==============
- *   FULLSCREEN
- * ------v------*/
+    /* ------^-------
+     *  /PASSWORD
+     * ==============
+     *   FULLSCREEN
+     * ------v------*/
 
-    toggleFullscreen: function() {
+    toggleFullscreen: function () {
         if (document.fullscreenElement || // alternative standard method
             document.mozFullScreenElement || // currently working methods
             document.webkitFullscreenElement ||
@@ -1229,11 +1232,11 @@ var UI = {
         UI.updateFullscreenButton();
     },
 
-    updateFullscreenButton: function() {
+    updateFullscreenButton: function () {
         if (document.fullscreenElement || // alternative standard method
             document.mozFullScreenElement || // currently working methods
             document.webkitFullscreenElement ||
-            document.msFullscreenElement ) {
+            document.msFullscreenElement) {
             document.getElementById('noVNC_fullscreen_button')
                 .classList.add("noVNC_selected");
         } else {
@@ -1242,28 +1245,28 @@ var UI = {
         }
     },
 
-/* ------^-------
- *  /FULLSCREEN
- * ==============
- *     RESIZE
- * ------v------*/
+    /* ------^-------
+     *  /FULLSCREEN
+     * ==============
+     *     RESIZE
+     * ------v------*/
 
     // Apply remote resizing or local scaling
-    applyResizeMode: function() {
+    applyResizeMode: function () {
         if (!UI.rfb) return;
 
         UI.rfb.scaleViewport = UI.getSetting('resize') === 'scale';
         UI.rfb.resizeSession = UI.getSetting('resize') === 'remote';
     },
 
-/* ------^-------
- *    /RESIZE
- * ==============
- * VIEW CLIPPING
- * ------v------*/
+    /* ------^-------
+     *    /RESIZE
+     * ==============
+     * VIEW CLIPPING
+     * ------v------*/
 
     // Update parameters that depend on the viewport clip setting
-    updateViewClip: function() {
+    updateViewClip: function () {
         if (!UI.rfb) return;
 
         var cur_clip = UI.rfb.clipViewport;
@@ -1284,7 +1287,7 @@ var UI = {
     },
 
     // Handle special cases where viewport clipping is forced on/off or locked
-    enableDisableViewClip: function() {
+    enableDisableViewClip: function () {
         var resizeSetting = UI.getSetting('resize');
         // Disable clipping if we are scaling, connected or on touch
         if (resizeSetting === 'scale' ||
@@ -1295,21 +1298,21 @@ var UI = {
         }
     },
 
-/* ------^-------
- * /VIEW CLIPPING
- * ==============
- *    VIEWDRAG
- * ------v------*/
+    /* ------^-------
+     * /VIEW CLIPPING
+     * ==============
+     *    VIEWDRAG
+     * ------v------*/
 
-    toggleViewDrag: function() {
+    toggleViewDrag: function () {
         if (!UI.rfb) return;
 
         var drag = UI.rfb.dragViewport;
         UI.setViewDrag(!drag);
-     },
+    },
 
     // Set the view drag mode which moves the viewport on mouse drags
-    setViewDrag: function(drag) {
+    setViewDrag: function (drag) {
         if (!UI.rfb) return;
 
         UI.rfb.dragViewport = drag;
@@ -1317,7 +1320,7 @@ var UI = {
         UI.updateViewDrag();
     },
 
-    updateViewDrag: function() {
+    updateViewDrag: function () {
         if (!UI.connected) return;
 
         var viewDragButton = document.getElementById('noVNC_view_drag_button');
@@ -1355,13 +1358,13 @@ var UI = {
         }
     },
 
-/* ------^-------
- *   /VIEWDRAG
- * ==============
- *    KEYBOARD
- * ------v------*/
+    /* ------^-------
+     *   /VIEWDRAG
+     * ==============
+     *    KEYBOARD
+     * ------v------*/
 
-    showVirtualKeyboard: function() {
+    showVirtualKeyboard: function () {
         if (!isTouchDevice) return;
 
         var input = document.getElementById('noVNC_keyboardinput');
@@ -1374,10 +1377,10 @@ var UI = {
             var l = input.value.length;
             // Move the caret to the end
             input.setSelectionRange(l, l);
-        } catch (err) {} // setSelectionRange is undefined in Google Chrome
+        } catch (err) { } // setSelectionRange is undefined in Google Chrome
     },
 
-    hideVirtualKeyboard: function() {
+    hideVirtualKeyboard: function () {
         if (!isTouchDevice) return;
 
         var input = document.getElementById('noVNC_keyboardinput');
@@ -1396,7 +1399,7 @@ var UI = {
         }
     },
 
-    onfocusVirtualKeyboard: function(event) {
+    onfocusVirtualKeyboard: function (event) {
         document.getElementById('noVNC_keyboard_button')
             .classList.add("noVNC_selected");
         if (UI.rfb) {
@@ -1404,7 +1407,7 @@ var UI = {
         }
     },
 
-    onblurVirtualKeyboard: function(event) {
+    onblurVirtualKeyboard: function (event) {
         document.getElementById('noVNC_keyboard_button')
             .classList.remove("noVNC_selected");
         if (UI.rfb) {
@@ -1412,7 +1415,7 @@ var UI = {
         }
     },
 
-    keepVirtualKeyboard: function(event) {
+    keepVirtualKeyboard: function (event) {
         var input = document.getElementById('noVNC_keyboardinput');
 
         // Only prevent focus change if the virtual keyboard is active
@@ -1440,7 +1443,7 @@ var UI = {
         event.preventDefault();
     },
 
-    keyboardinputReset: function() {
+    keyboardinputReset: function () {
         var kbi = document.getElementById('noVNC_keyboardinput');
         kbi.value = new Array(UI.defaultKeyboardinputLen).join("_");
         UI.lastKeyboardinput = kbi.value;
@@ -1456,7 +1459,7 @@ var UI = {
     // the keyboardinput element instead and generate the corresponding key events.
     // This code is required since some browsers on Android are inconsistent in
     // sending keyCodes in the normal keyboard events when using on screen keyboards.
-    keyInput: function(event) {
+    keyInput: function (event) {
 
         if (!UI.rfb) return;
 
@@ -1523,13 +1526,13 @@ var UI = {
         }
     },
 
-/* ------^-------
- *   /KEYBOARD
- * ==============
- *   EXTRA KEYS
- * ------v------*/
+    /* ------^-------
+     *   /KEYBOARD
+     * ==============
+     *   EXTRA KEYS
+     * ------v------*/
 
-    openExtraKeys: function() {
+    openExtraKeys: function () {
         UI.closeAllPanels();
         UI.openControlbar();
 
@@ -1539,31 +1542,31 @@ var UI = {
             .classList.add("noVNC_selected");
     },
 
-    closeExtraKeys: function() {
+    closeExtraKeys: function () {
         document.getElementById('noVNC_modifiers')
             .classList.remove("noVNC_open");
         document.getElementById('noVNC_toggle_extra_keys_button')
             .classList.remove("noVNC_selected");
     },
 
-    toggleExtraKeys: function() {
-        if(document.getElementById('noVNC_modifiers')
+    toggleExtraKeys: function () {
+        if (document.getElementById('noVNC_modifiers')
             .classList.contains("noVNC_open")) {
             UI.closeExtraKeys();
-        } else  {
+        } else {
             UI.openExtraKeys();
         }
     },
 
-    sendEsc: function() {
+    sendEsc: function () {
         UI.rfb.sendKey(KeyTable.XK_Escape, "Escape");
     },
 
-    sendTab: function() {
+    sendTab: function () {
         UI.rfb.sendKey(KeyTable.XK_Tab);
     },
 
-    toggleCtrl: function() {
+    toggleCtrl: function () {
         var btn = document.getElementById('noVNC_toggle_ctrl_button');
         if (btn.classList.contains("noVNC_selected")) {
             UI.rfb.sendKey(KeyTable.XK_Control_L, "ControlLeft", false);
@@ -1574,7 +1577,7 @@ var UI = {
         }
     },
 
-    toggleAlt: function() {
+    toggleAlt: function () {
         var btn = document.getElementById('noVNC_toggle_alt_button');
         if (btn.classList.contains("noVNC_selected")) {
             UI.rfb.sendKey(KeyTable.XK_Alt_L, "AltLeft", false);
@@ -1585,26 +1588,26 @@ var UI = {
         }
     },
 
-    sendCtrlAltDel: function() {
+    sendCtrlAltDel: function () {
         UI.rfb.sendCtrlAltDel();
     },
 
-/* ------^-------
- *   /EXTRA KEYS
- * ==============
- *     MISC
- * ------v------*/
+    /* ------^-------
+     *   /EXTRA KEYS
+     * ==============
+     *     MISC
+     * ------v------*/
 
-    setMouseButton: function(num) {
+    setMouseButton: function (num) {
         var view_only = UI.rfb.viewOnly;
         if (UI.rfb && !view_only) {
             UI.rfb.touchButton = num;
         }
 
-        var blist = [0, 1,2,4];
+        var blist = [0, 1, 2, 4];
         for (var b = 0; b < blist.length; b++) {
             var button = document.getElementById('noVNC_mouse_button' +
-                                                 blist[b]);
+                blist[b]);
             if (blist[b] === num && !view_only) {
                 button.classList.remove("noVNC_hidden");
             } else {
@@ -1613,7 +1616,7 @@ var UI = {
         }
     },
 
-    updateViewOnly: function() {
+    updateViewOnly: function () {
         if (!UI.rfb) return;
         UI.rfb.viewOnly = UI.getSetting('view_only');
 
@@ -1632,22 +1635,22 @@ var UI = {
         UI.setMouseButton(1); //has it's own logic for hiding/showing
     },
 
-    updateLogging: function() {
+    updateLogging: function () {
         WebUtil.init_logging(UI.getSetting('logging'));
     },
 
-    updateDesktopName: function(e) {
+    updateDesktopName: function (e) {
         UI.desktopName = e.detail.name;
         // Display the desktop name in the document title
         document.title = e.detail.name + " - noVNC";
     },
 
-    bell: function(e) {
+    bell: function (e) {
         if (WebUtil.getConfigVar('bell', 'on') === 'on') {
             var promise = document.getElementById('noVNC_bell').play();
             // The standards disagree on the return value here
             if (promise) {
-                promise.catch(function(e) {
+                promise.catch(function (e) {
                     if (e.name === "NotAllowedError") {
                         // Ignore when the browser doesn't let us play audio.
                         // It is common that the browsers require audio to be
@@ -1661,17 +1664,17 @@ var UI = {
     },
 
     //Helper to add options to dropdown.
-    addOption: function(selectbox, text, value) {
+    addOption: function (selectbox, text, value) {
         var optn = document.createElement("OPTION");
         optn.text = text;
         optn.value = value;
         selectbox.options.add(optn);
     },
 
-    createJupyterHubFrame: function() {
+    createJupyterHubFrame: function () {
         // clear old frame, if exists
         UI.destroyJupyterHubFrame();
-        
+
         // create frame
         var iframe = document.createElement('iframe');
         iframe.id = UI.jupyterHubFrameId;
@@ -1680,11 +1683,11 @@ var UI = {
         document.body.appendChild(iframe);
 
         // set refresh interval to iframe
-        var reloadFrame = function() { document.getElementById(UI.jupyterHubFrameId).contentWindow.location.reload(); }
-        UI.jupyterHubFrameRefreshIntervalId = setInterval(reloadFrame, 60*1000);
+        var reloadFrame = function () { document.getElementById(UI.jupyterHubFrameId).contentWindow.location.reload(); }
+        UI.jupyterHubFrameRefreshIntervalId = setInterval(reloadFrame, 60 * 1000);
     },
 
-    destroyJupyterHubFrame: function() {
+    destroyJupyterHubFrame: function () {
         if (UI.jupyterHubFrameRefreshIntervalId) {
             clearInterval(UI.jupyterHubFrameRefreshIntervalId);
             UI.jupyterHubFrameRefreshIntervalId = null;
@@ -1695,7 +1698,7 @@ var UI = {
         }
     },
 
-    checkJupyterHubSession: function() {
+    checkJupyterHubSession: function () {
         try {
             return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
                 if (response.status != 200) {
@@ -1708,19 +1711,19 @@ var UI = {
         }
     },
 
-    runCheckJupyterHubSession: function() {
+    runCheckJupyterHubSession: function () {
         function timeout() {
             UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runCheckJupyterHubSession, 2000);
         }
         UI.checkJupyterHubSession()
-            .then(function(r) { r || timeout() })
-            .catch(function(e) { console.error(e) || timeout() });
+            .then(function (r) { r || timeout() })
+            .catch(function (e) { console.error(e) || timeout() });
     },
 
-/* ------^-------
- *    /MISC
- * ==============
- */
+    /* ------^-------
+     *    /MISC
+     * ==============
+     */
 };
 
 // Set up translations
