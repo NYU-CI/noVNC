@@ -411,7 +411,9 @@ select:active {
   padding: 0 5px 0 10px;
 }
 
-,
+#noVNC_control_bar .noVNC_scroll > * {
+  margin: 0 5px;
+}
 
 /* Control bar hint */
 #noVNC_control_bar_hint {
