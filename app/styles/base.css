@@ -404,7 +404,7 @@ select:active {
   max-height: 100vh; /* Chrome is buggy with 100% */
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 0 10px 0 5px;
+  /* padding: 0 10px 0 5px; */
   display: flex;
 }
 
