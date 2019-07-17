@@ -590,7 +590,7 @@ select:active {
 }
 
 /* Extra manual keys */
-:root:not(.noVNC_connected) #noVNC_extra_keys {
+#noVNC_extra_keys {
   display: none;
 }
 
