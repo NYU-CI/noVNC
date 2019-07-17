@@ -343,7 +343,7 @@ select:active {
 
 #noVNC_control_bar_handle {
   /* position: absolute; */
-  transform: translateY(35px);
+  /* transform: translateY(35px); */
   width: calc(100% + 30px);
   height: 50px;
   z-index: -1;
@@ -355,16 +355,16 @@ select:active {
   background-position: right;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
 }
-#noVNC_control_bar_handle:after {
+/* #noVNC_control_bar_handle:after {
   content: "";
   transition: transform 0.5s ease-in-out;
   background: url("../images/handle.svg");
   position: absolute;
-  top: 22px; /* (50px-6px)/2 */
+  top: 22px;
   right: 5px;
   width: 5px;
   height: 6px;
-}
+} */
 #noVNC_control_bar.noVNC_open #noVNC_control_bar_handle:after {
   transform: translateX(1px) rotate(180deg);
 }
