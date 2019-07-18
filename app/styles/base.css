@@ -345,7 +345,8 @@ select:active {
 	height: 15px;
 	cursor: pointer;
 	background-image: linear-gradient(#658eba, #164480);
-  margin: 0 auto;
+  position: absolute;
+  left: 45%;
   border-radius: 0 0 20px 20px;
 }
 #noVNC_control_bar_handle:after {
@@ -354,6 +355,10 @@ select:active {
   background: url("../images/handle.svg");
   width: 5px;
   height: 6px;
+  position: absolute;
+  transform: rotate(90deg);
+  top: 2px;
+  left: calc(50% - 2px);
 }
 #noVNC_control_bar.noVNC_open #noVNC_control_bar_handle:after {
   transform: translateX(1px) rotate(180deg);
