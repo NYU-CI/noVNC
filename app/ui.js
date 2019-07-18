@@ -662,8 +662,8 @@ var UI = {
         }
 
         // The transform needs coordinates that are relative to the parent
-        var parentRelativeY = newY - controlbarBounds.top;
-        handle.style.transform = "translateY(" + parentRelativeY + "px)";
+        // var parentRelativeY = newY - controlbarBounds.top;
+        // handle.style.transform = "translateY(" + parentRelativeY + "px)";
     },
 
     updateControlbarHandle: function () {

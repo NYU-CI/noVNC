@@ -1,33 +1,33 @@
-/*
- * noVNC base CSS
- * Copyright (C) 2012 Joel Martin
- * Copyright (C) 2016 Samuel Mannehed for Cendio AB
- * Copyright (C) 2016 Pierre Ossman for Cendio AB
- * noVNC is licensed under the MPL 2.0 (see LICENSE.txt)
- * This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
- */
+	/*
+	 * noVNC base CSS
+	 * Copyright (C) 2012 Joel Martin
+	 * Copyright (C) 2016 Samuel Mannehed for Cendio AB
+	 * Copyright (C) 2016 Pierre Ossman for Cendio AB
+	 * noVNC is licensed under the MPL 2.0 (see LICENSE.txt)
+	 * This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
+	 */
 
-/*
- * Z index layers:
- *
- * 0: Main screen
- * 10: Control bar
- * 50: Transition blocker
- * 60: Connection popups
- * 100: Status bar
- * ...
- * 1000: Javascript crash
- * ...
- * 10000: Max (used for polyfills)
- */
+	/*
+	 * Z index layers:
+	 *
+	 * 0: Main screen
+	 * 10: Control bar
+	 * 50: Transition blocker
+	 * 60: Connection popups
+	 * 100: Status bar
+	 * ...
+	 * 1000: Javascript crash
+	 * ...
+	 * 10000: Max (used for polyfills)
+	 */
 
-body {
-  margin:0;
-  padding:0;
-  font-family: Helvetica;
-  /*Background image with light grey curve.*/
-  background-color:#494949;
-  background-repeat:no-repeat;
+	body {
+	  margin:0;
+	  padding:0;
+	  font-family: Helvetica;
+	  /*Background image with light grey curve.*/
+	  background-color:#494949;
+	  background-repeat:no-repeat;
   background-position:right bottom;
   height:100%;
   touch-action: none;
@@ -288,7 +288,7 @@ select:active {
   transition: 0.5s ease-in-out;
 
   /* Edge misrenders animations wihthout this */
-  transform: translateX(0);
+  /*transform: translateX(0);*/
   width: 50vw;
 }
 :root.noVNC_connected #_anchor.noVNC_idle {
@@ -307,24 +307,22 @@ select:active {
 #noVNC_control_bar {
   position: relative;
   transition: 0.5s ease-in-out;
-  /* padding: 3px 0;
-  background-image: linear-gradient(#658eba, #164480);
-  border-radius: 0 0 25px 25px; */
+  top: -20px;
 }
 
 #noVNC_control_bar.noVNC_open {
-  transform: translateY(-20px);
+  transform: translateY(20px);
 }
 
 #noVNC_control_bar::before {
   /* This extra element is to get a proper shadow */
-  content: "";
+  /*content: "";
   position: absolute;
   z-index: -1;
   height: 100%;
   width: 30px;
   left: -30px;
-  transition: box-shadow 0.5s ease-in-out;
+  transition: box-shadow 0.5s ease-in-out;*/
 }
 #noVNC_control_bar.noVNC_open::before {
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
