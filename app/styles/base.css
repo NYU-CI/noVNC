@@ -361,7 +361,7 @@ select:active {
   left: calc(50% - 2px);
 }
 #noVNC_control_bar.noVNC_open #noVNC_control_bar_handle:after {
-  transform: translateX(1px) rotate(180deg);
+  transform: rotate(270deg);
 }
 :root:not(.noVNC_connected) #noVNC_control_bar_handle {
   display: none;
