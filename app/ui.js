@@ -1366,8 +1366,18 @@ var UI = {
      * ------v------*/
 
     initNameBar: function () {
-        console.log(WebUtil.readCookie('jupyterhub-username'));
-        console.log(WebUtil.readCookie('jupyterhub-project'));
+	const nameBar = [];
+        const userNameCookie = WebUtil.readCookie('jupyterhub-username');
+        const projectCookie = WebUtil.readCookie('jupyterhub-project');
+	if(userNameCookie) {
+	  nameBar.push(atob(userNameCookie.replace(/"/g, '')));
+	}
+	
+	if(projectCookie) {
+	  nameBar.push(atob(projectCookie.replace(/"/g, '')));
+	}
+	document.querySelector('.noVNC_name span').innerHTML = nameBar.join(" :: ");
+
     },
 
     /* ------^-------
