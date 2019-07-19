@@ -105,6 +105,8 @@ var UI = {
 
         UI.updateVisualState('init');
 
+        UI.initNameBar();
+
         document.documentElement.classList.remove("noVNC_loading");
 
         var autoconnect = WebUtil.getConfigVar('autoconnect', false);
@@ -1356,6 +1358,16 @@ var UI = {
                 viewDragButton.classList.add("noVNC_hidden");
             }
         }
+    },
+    /* ------^-------
+     *   /VIEWDRAG
+     * ==============
+     *    NAME BAR
+     * ------v------*/
+
+    initNameBar: function () {
+        console.log(WebUtil.readCookie('jupyterhub-username'));
+        console.log(WebUtil.readCookie('jupyterhub-project'));
     },
 
     /* ------^-------
