@@ -1,33 +1,33 @@
-/*
- * noVNC base CSS
- * Copyright (C) 2012 Joel Martin
- * Copyright (C) 2016 Samuel Mannehed for Cendio AB
- * Copyright (C) 2016 Pierre Ossman for Cendio AB
- * noVNC is licensed under the MPL 2.0 (see LICENSE.txt)
- * This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
- */
+	/*
+	 * noVNC base CSS
+	 * Copyright (C) 2012 Joel Martin
+	 * Copyright (C) 2016 Samuel Mannehed for Cendio AB
+	 * Copyright (C) 2016 Pierre Ossman for Cendio AB
+	 * noVNC is licensed under the MPL 2.0 (see LICENSE.txt)
+	 * This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
+	 */
 
-/*
- * Z index layers:
- *
- * 0: Main screen
- * 10: Control bar
- * 50: Transition blocker
- * 60: Connection popups
- * 100: Status bar
- * ...
- * 1000: Javascript crash
- * ...
- * 10000: Max (used for polyfills)
- */
+	/*
+	 * Z index layers:
+	 *
+	 * 0: Main screen
+	 * 10: Control bar
+	 * 50: Transition blocker
+	 * 60: Connection popups
+	 * 100: Status bar
+	 * ...
+	 * 1000: Javascript crash
+	 * ...
+	 * 10000: Max (used for polyfills)
+	 */
 
-body {
-  margin:0;
-  padding:0;
-  font-family: Helvetica;
-  /*Background image with light grey curve.*/
-  background-color:#494949;
-  background-repeat:no-repeat;
+	body {
+	  margin:0;
+	  padding:0;
+	  font-family: Helvetica;
+	  /*Background image with light grey curve.*/
+	  background-color:#494949;
+	  background-repeat:no-repeat;
   background-position:right bottom;
   height:100%;
   touch-action: none;
@@ -288,7 +288,8 @@ select:active {
   transition: 0.5s ease-in-out;
 
   /* Edge misrenders animations wihthout this */
-  transform: translateX(0);
+  /*transform: translateX(0);*/
+  width: 50vw;
 }
 :root.noVNC_connected #_anchor.noVNC_idle {
   opacity: 0.8;
@@ -299,29 +300,29 @@ select:active {
   margin-top: 325px;
 }
 
+#noVNC_control_bar_anchor.noVNC_top {
+  left: calc(50vw - 25vw);
+}
+
 #noVNC_control_bar {
   position: relative;
-  left: -100%;
-
   transition: 0.5s ease-in-out;
-
-  background-color: #2d353c;
-  border-radius: 0 10px 10px 0;
-
+  top: -20px;
 }
+
 #noVNC_control_bar.noVNC_open {
-  box-shadow: 2px 2px 0px rgba(0, 0, 0);
-  left: 0;
+  transform: translateY(20px);
 }
+
 #noVNC_control_bar::before {
   /* This extra element is to get a proper shadow */
-  content: "";
+  /*content: "";
   position: absolute;
   z-index: -1;
   height: 100%;
   width: 30px;
   left: -30px;
-  transition: box-shadow 0.5s ease-in-out;
+  transition: box-shadow 0.5s ease-in-out;*/
 }
 #noVNC_control_bar.noVNC_open::before {
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
@@ -338,33 +339,27 @@ select:active {
 }
 
 #noVNC_control_bar_handle {
+	width: 10%;
+	height: 15px;
+	cursor: pointer;
+	background-image: linear-gradient(#658eba, #164480);
   position: absolute;
-  left: -15px;
-  top: 0;
-  transform: translateY(35px);
-  width: calc(100% + 30px);
-  height: 50px;
-  z-index: -1;
-  cursor: pointer;
-  border-radius: 5px;
-  background-color: #2d353c;
-  background-image: url("../images/handle_bg.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.5);
+  left: 45%;
+  border-radius: 0 0 20px 20px;
 }
 #noVNC_control_bar_handle:after {
   content: "";
   transition: transform 0.5s ease-in-out;
   background: url("../images/handle.svg");
-  position: absolute;
-  top: 22px; /* (50px-6px)/2 */
-  right: 5px;
   width: 5px;
   height: 6px;
+  position: absolute;
+  transform: rotate(90deg);
+  top: 3px;
+  left: calc(50% - 2px);
 }
 #noVNC_control_bar.noVNC_open #noVNC_control_bar_handle:after {
-  transform: translateX(1px) rotate(180deg);
+  transform: rotate(270deg);
 }
 :root:not(.noVNC_connected) #noVNC_control_bar_handle {
   display: none;
@@ -399,10 +394,20 @@ select:active {
   max-height: 100vh; /* Chrome is buggy with 100% */
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 0 10px 0 5px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  min-height: 20px;
+  background-image: linear-gradient(#658eba, #164480);
+  border-radius: 0 0 25px 25px;
 }
+
 .noVNC_right #noVNC_control_bar .noVNC_scroll {
   padding: 0 5px 0 10px;
+}
+
+#noVNC_control_bar .noVNC_scroll > * {
+  margin: 0 5px;
 }
 
 /* Control bar hint */
@@ -441,8 +446,9 @@ select:active {
   padding: 4px 4px;
   margin: 10px 0;
   vertical-align: middle;
-  border:1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
+  width: 15px;
+  /* border:1px solid rgba(255, 255, 255, 0.2); */
+  /* border-radius: 6px; */
 }
 .noVNC_button.noVNC_selected {
   border-color: rgba(0, 0, 0, 0.8);
@@ -582,7 +588,7 @@ select:active {
 }
 
 /* Extra manual keys */
-:root:not(.noVNC_connected) #noVNC_extra_keys {
+#noVNC_extra_keys {
   display: none;
 }
 
@@ -590,6 +596,14 @@ select:active {
   background-color: rgb(92, 92, 92);
   border: none;
   padding: 0 10px;
+}
+
+.noVNC_name {
+  min-width: 200px;
+  text-align: center;
+  color: white;
+  font-size: 0.8em;
+  flex: 1;
 }
 
 /* Shutdown/Reboot */
