@@ -302,16 +302,17 @@ select:active {
 
 #noVNC_control_bar_anchor.noVNC_top {
   left: calc(50vw - 25vw);
+  max-height: 25px;
+  top: -25px;
 }
 
 #noVNC_control_bar {
   position: relative;
   transition: 0.5s ease-in-out;
-  top: -20px;
 }
 
 #noVNC_control_bar.noVNC_open {
-  transform: translateY(20px);
+  transform: translateY(25px);
 }
 
 #noVNC_control_bar::before {
