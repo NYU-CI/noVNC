@@ -1366,18 +1366,18 @@ var UI = {
      * ------v------*/
 
     initNameBar: function () {
-	const nameBar = [];
-        const userNameCookie = WebUtil.readCookie('jupyterhub-username');
-        const projectCookie = WebUtil.readCookie('jupyterhub-project');
-	if(userNameCookie) {
-	  nameBar.push(atob(userNameCookie.replace(/"/g, '')));
-	}
-	
-	if(projectCookie) {
-	  nameBar.push(atob(projectCookie.replace(/"/g, '')));
-	}
-	document.querySelector('.noVNC_name span').innerHTML = nameBar.join(" :: ");
-
+        var nameBar = [];
+        var userNameCookie = WebUtil.readCookie('jupyterhub-username');
+        var projectCookie = WebUtil.readCookie('jupyterhub-project');
+        
+        if (userNameCookie && projectCookie) {
+            nameBar.push(atob(userNameCookie.replace(/"/g, '')));
+            nameBar.push(atob(projectCookie.replace(/"/g, '')));
+            document.querySelector('.noVNC_name span').innerHTML = nameBar.join(" :: ");
+        } else {
+            var user = window.location.pathname.split('/')[2];
+            document.querySelector('.noVNC_name span').innerHTML = user;
+        }
     },
 
     /* ------^-------
