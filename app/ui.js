@@ -105,7 +105,7 @@ var UI = {
 
         UI.updateVisualState('init');
 
-        UI.initNameBar();
+	UI.initNameBar();
 
         document.documentElement.classList.remove("noVNC_loading");
 
@@ -1366,18 +1366,16 @@ var UI = {
      * ------v------*/
 
     initNameBar: function () {
-        var nameBar = [];
-        var userNameCookie = WebUtil.readCookie('jupyterhub-username');
-        var projectCookie = WebUtil.readCookie('jupyterhub-project');
-        
-        if (userNameCookie && projectCookie) {
-            nameBar.push(atob(userNameCookie.replace(/"/g, '')));
-            nameBar.push(atob(projectCookie.replace(/"/g, '')));
-            document.querySelector('.noVNC_name span').innerHTML = nameBar.join(" :: ");
-        } else {
-            var user = window.location.pathname.split('/')[2];
-            document.querySelector('.noVNC_name span').innerHTML = user;
-        }
+	return UI.setNameBar(___JUPYTERHUB_USER___, ___JUPYTERHUB_PROJECT___) || UI.setNameByLocation();
+    },
+
+    setNameBarByLocation: function() { // fallback function
+	return UI.setNameBar(window.location.pathname.split('/')[2]);
+    },
+
+    setNameBar: function(name, project) {
+	document.querySelector('.noVNC_name span').innerHTML = [name,project].filter(x => !!x).join(" :: ");
+	return !!name || !!project;
     },
 
     /* ------^-------
