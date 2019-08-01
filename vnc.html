@@ -56,9 +56,9 @@
     <link rel="apple-touch-icon" sizes="76x76" type="image/png" href="app/images/icons/novnc-76x76.png">
     <link rel="apple-touch-icon" sizes="120x120" type="image/png" href="app/images/icons/novnc-120x120.png">
     <link rel="apple-touch-icon" sizes="152x152" type="image/png" href="app/images/icons/novnc-152x152.png">-->
-    <link rel="shortcut icon" href="app/images/icons/favicon.ico" />
+    <link rel="shortcut icon" href="app/images/icons/favicon.ico?___BUILD___" />
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="app/styles/base.css" />
+    <link rel="stylesheet" href="app/styles/base.css?___BUILD___" />
 
     <!--
     <script type='text/javascript'
@@ -66,11 +66,11 @@
     -->
 
     <!-- this is included as a normal file in order to catch script-loading errors as well -->
-    <script type="text/javascript" src="app/error-handler.js"></script>
+    <script type="text/javascript" src="app/error-handler.js?___BUILD___"></script>
 
     <!-- begin scripts -->
     <!-- promise polyfills promises for IE11 -->
-    <script src="vendor/promise.js"></script>
+    <script src="vendor/promise.js?___BUILD___"></script>
     <!-- ES2015/ES6 modules polyfill -->
     <script type="module">
         window._noVNC_has_module_support = true;
@@ -79,12 +79,12 @@
         window.addEventListener("load", function () {
             if (window._noVNC_has_module_support) return;
             var loader = document.createElement("script");
-            loader.src = "vendor/browser-es-module-loader/dist/browser-es-module-loader.js";
+            loader.src = "vendor/browser-es-module-loader/dist/browser-es-module-loader.js?___BUILD___";
             document.head.appendChild(loader);
         });
     </script>
     <!-- actual script modules -->
-    <script type="module" crossorigin="anonymous" src="app/ui.js"></script>
+    <script type="module" crossorigin="anonymous" src="app/ui.js?___BUILD___"></script>
     <!-- end scripts -->
 </head>
 
