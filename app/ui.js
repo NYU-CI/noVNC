@@ -1366,7 +1366,7 @@ var UI = {
      * ------v------*/
 
     initNameBar: function () {
-	return UI.setNameBar(___JUPYTERHUB_USER___, ___JUPYTERHUB_PROJECT___) || UI.setNameByLocation();
+	return UI.setNameBar("___JUPYTERHUB_USER___", "___JUPYTERHUB_PROJECT___") || UI.setNameByLocation();
     },
 
     setNameBarByLocation: function() { // fallback function
