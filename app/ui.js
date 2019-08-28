@@ -1107,7 +1107,7 @@ var UI = {
         // Do this last because it can only be used on rendered elements
         UI.rfb.focus();
         if (window.location.hostname !== 'localhost') {
-            UI.createJupyterHubFrame();
+            //UI.createJupyterHubFrame();
             UI.runCheckJupyterHubSession();
         }
     },
@@ -1143,7 +1143,7 @@ var UI = {
             UI.showStatus(_("Disconnected"), 'normal');
         }
 
-        UI.destroyJupyterHubFrame();
+        //UI.destroyJupyterHubFrame();
         if (UI.jupyterHubSessionCheckTimeoutId) {
             clearTimeout(UI.jupyterHubSessionCheckTimeoutId);
         }
