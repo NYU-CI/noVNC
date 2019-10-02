@@ -128,7 +128,7 @@ var transform_html = function (legacy_scripts, only_legacy) {
     </script>\n`;
 
             // Original, ES6 modules
-            new_script += '    <script type="module" crossorigin="anonymous" src="app/ui.js"></script>\n';
+            new_script += '    <script type="module" crossorigin="use-credentials" src="app/ui.js"></script>\n';
         }
 
         contents = contents.slice(0, start_ind) + `${new_script}\n` + contents.slice(end_ind);
