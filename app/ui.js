@@ -314,8 +314,8 @@ var UI = {
     },
 
     addConnectionControlHandlers: function () {
-        document.getElementById("noVNC_disconnect_button")
-            .addEventListener('click', UI.disconnect);
+        // document.getElementById("noVNC_disconnect_button")
+        //     .addEventListener('click', UI.disconnect);
         document.getElementById("noVNC_connect_button")
             .addEventListener('click', UI.connect);
         document.getElementById("noVNC_stop_workspace_button")
