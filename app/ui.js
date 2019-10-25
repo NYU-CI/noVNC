@@ -1719,9 +1719,10 @@ var UI = {
     },
 
     checkJupyterHubSession: function () {
+        const regexHttpSuccess = /^[23]..$/;
         try {
             return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
-                if (response.status != 200) {
+                if ( !regexHttpSuccess.test(response.status.toString) ) {
                     window.location.href = UI.jupyterHubHomeUrl;
                     return true;
                 }
