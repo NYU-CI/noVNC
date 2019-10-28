@@ -1130,6 +1130,7 @@ var UI = {
                     'error');
             } else {
                 window.location = UI.jupyterHubHomeUrl;
+                console.log("Redirecting to hub");
                 UI.showStatus(_("Failed to connect to server"), 'error');
             }
         } else if (UI.getSetting('reconnect', false) === true && !UI.inhibit_reconnect) {
@@ -1724,6 +1725,7 @@ var UI = {
             return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
                 if ( !regexHttpSuccess.test(response.status.toString) ) {
                     window.location.href = UI.jupyterHubHomeUrl;
+                    console.log("Redirecting to hub, check session failed");
                     return true;
                 }
             });
