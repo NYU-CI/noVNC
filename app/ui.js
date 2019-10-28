@@ -1723,7 +1723,7 @@ var UI = {
         const regexHttpSuccess = /^[23]..$/;
         try {
             return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
-                if ( !regexHttpSuccess.test(response.status.toString) ) {
+                if ( !regexHttpSuccess.test(response.status.toString()) ) {
                     window.location.href = UI.jupyterHubHomeUrl;
                     console.log("Redirecting to hub, check session failed");
                     return true;
