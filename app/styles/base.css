@@ -637,6 +637,9 @@ select:active {
 }
 
 /* Settings */
+.noVNC_settings_container {
+  height: 30vh;
+}
 #noVNC_settings {
 }
 #noVNC_settings ul {

@@ -94,7 +94,7 @@ var UI = {
         UI.addMachineHandlers();
         UI.addConnectionControlHandlers();
         //UI.addClipboardHandlers();
-        //UI.addSettingsHandlers();
+        UI.addSettingsHandlers();
         document.getElementById("noVNC_status")
             .addEventListener('click', UI.hideStatus);
 
