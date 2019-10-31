@@ -1720,6 +1720,7 @@ var UI = {
     },
 
     checkJupyterHubSession: function () {
+	return Promise.resolve(); // faustojunqueira_fr_ctr: It's necessary to minimize number of request in Jupyterhub
         const regexHttpSuccess = /^[23]..$/;
         try {
             return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
