@@ -1736,10 +1736,7 @@ var UI = {
     },
 
     runvalidadeJupyterHubSession: function () {
-        function timeout() {
-            // UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 450000);
-            UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 5000);
-        }
+        const timeout = () => UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 450000);
         UI.validadeJupyterHubSession()
             .then(function (r) { r || timeout() })
             .catch(function (e) { console.error(e) || timeout() });
