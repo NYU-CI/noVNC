@@ -43,6 +43,7 @@ var UI = {
     reconnect_password: null,
 
     jupyterHubHomeUrl: '/hub/home',
+    validadeJupyterHubSessionUrl: '/hub/api/session-check',
     jupyterHubFrameId: 'jhub-frame',
     jupyterHubFrameRefreshIntervalId: null,
     jupyterHubSessionCheckTimeoutId: null,
@@ -1108,7 +1109,7 @@ var UI = {
         UI.rfb.focus();
         if (window.location.hostname !== 'localhost') {
             //UI.createJupyterHubFrame();
-            UI.runCheckJupyterHubSession();
+            UI.runvalidadeJupyterHubSession();
         }
     },
 
@@ -1719,14 +1720,13 @@ var UI = {
         }
     },
 
-    checkJupyterHubSession: function () {
-	    // return Promise.resolve(); // faustojunqueira_fr_ctr: It's necessary to minimize number of request in Jupyterhub
+    validadeJupyterHubSession: function () {
         const regexHttpSuccess = /^[23]..$/;
         try {
-            return fetch(UI.jupyterHubHomeUrl, { redirect: 'manual' }).then(function (response) {
+            return fetch(UI.validadeJupyterHubSessionUrl, { redirect: 'manual' }).then(function (response) {
                 if ( !regexHttpSuccess.test(response.status.toString()) ) {
-                    window.location.href = UI.jupyterHubHomeUrl;
                     console.log("Redirecting to hub, check session failed");
+                    window.location.href = UI.jupyterHubHomeUrl;
                     return true;
                 }
             });
@@ -1735,11 +1735,12 @@ var UI = {
         }
     },
 
-    runCheckJupyterHubSession: function () {
+    runvalidadeJupyterHubSession: function () {
         function timeout() {
-            UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runCheckJupyterHubSession, 450000);
+            // UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 450000);
+            UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 5000);
         }
-        UI.checkJupyterHubSession()
+        UI.validadeJupyterHubSession()
             .then(function (r) { r || timeout() })
             .catch(function (e) { console.error(e) || timeout() });
     },
