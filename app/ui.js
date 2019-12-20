@@ -1723,9 +1723,7 @@ var UI = {
     validadeJupyterHubSession: function () {
         const regexHttpSuccess = /^[23]..$/;
         try {
-            console.log("send ", UI.validadeJupyterHubSessionUrl);
             return fetch(UI.validadeJupyterHubSessionUrl, { redirect: 'manual' }).then(function (response) {
-                console.log("response ", UI.validadeJupyterHubSessionUrl);
                 if ( !regexHttpSuccess.test(response.status.toString()) ) {
                     console.warn("Redirecting to hub, check session failed");
                     window.location.href = UI.jupyterHubHomeUrl;
@@ -1739,7 +1737,6 @@ var UI = {
     },
 
     runvalidadeJupyterHubSession: function () {
-        console.log("runvalidadeJupyterHubSession");
         if(!UI.jupyterHubSessionCheckTimeoutId){
             const timeout = () => UI.jupyterHubSessionCheckTimeoutId = setTimeout(() => {
                 UI.jupyterHubSessionCheckTimeoutId = null;
