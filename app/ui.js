@@ -1740,10 +1740,15 @@ var UI = {
 
     runvalidadeJupyterHubSession: function () {
         console.log("runvalidadeJupyterHubSession");
-        const timeout = () => UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 240000);
-        UI.validadeJupyterHubSession()
-            .then(function (r) { r || timeout() })
-            .catch(function (e) { console.error(e) || timeout() });
+        if(!UI.jupyterHubSessionCheckTimeoutId){
+            const timeout = () => UI.jupyterHubSessionCheckTimeoutId = setTimeout(() => {
+                UI.jupyterHubSessionCheckTimeoutId = null;
+                UI.runvalidadeJupyterHubSession();
+            }, 240000);
+            UI.validadeJupyterHubSession()
+                .then(function (r) { r || timeout() })
+                .catch(function (e) { console.error(e) || timeout() });
+        }
     },
 
     /* ------^-------
