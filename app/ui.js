@@ -1723,20 +1723,24 @@ var UI = {
     validadeJupyterHubSession: function () {
         const regexHttpSuccess = /^[23]..$/;
         try {
+            console.log("send ", UI.validadeJupyterHubSessionUrl);
             return fetch(UI.validadeJupyterHubSessionUrl, { redirect: 'manual' }).then(function (response) {
+                console.log("response ", UI.validadeJupyterHubSessionUrl);
                 if ( !regexHttpSuccess.test(response.status.toString()) ) {
-                    console.log("Redirecting to hub, check session failed");
+                    console.warn("Redirecting to hub, check session failed");
                     window.location.href = UI.jupyterHubHomeUrl;
                     return true;
                 }
             });
         } catch (e) {
+            console.error("validadeJupyterHubSession", e);
             return Promise.reject(e);
         }
     },
 
     runvalidadeJupyterHubSession: function () {
-        const timeout = () => UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 450000);
+        console.log("runvalidadeJupyterHubSession");
+        const timeout = () => UI.jupyterHubSessionCheckTimeoutId = setTimeout(UI.runvalidadeJupyterHubSession, 240000);
         UI.validadeJupyterHubSession()
             .then(function (r) { r || timeout() })
             .catch(function (e) { console.error(e) || timeout() });
